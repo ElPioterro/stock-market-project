@@ -7,7 +7,7 @@ var max = 10;
 var min = -10;
 var offset;
 var price = 1000;
-var prevPrice = 0;
+var prevPrice = 1000;
 var reduction;
 var day = 0;
 
@@ -23,6 +23,10 @@ function oneCycle() {
 
   var priceColor = price <= prevPrice ? "red" : "green";
   var styleChange = "<td style='" + "color: " + priceColor + "'>";
+  var priceExtra =
+    prevPrice - price >= 0
+      ? (price - prevPrice).toFixed(2) + "↓"
+      : (price - prevPrice).toFixed(2) + "↑";
 
   document.getElementById("tab").innerHTML +=
     "<tr><td>" +
@@ -34,6 +38,9 @@ function oneCycle() {
     "</td>" +
     styleChange +
     price.toFixed(2) +
-    " $</td> </tr>";
+    " $</td>" +
+    styleChange +
+    priceExtra +
+    " </td></tr>";
   prevPrice = price;
 }
