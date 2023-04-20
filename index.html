@@ -1,37 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=1, initial-scale=1.0" />
-    <title>Document</title>
-    <script src="main.js"></script>
-
-    <style>
-      table,
-      tr,
-      td,
-      th {
-        border: 1px solid black;
-        border-collapse: collapse;
-      }
-      table {
-        width: 30%;
-      }
-    </style>
+    <title>Stock Market Graph</title>
   </head>
   <body>
-    <input type="button" onclick="oneCycle()" value="FuckOffDay" />
-    <table>
-      <tbody id="tab">
-        <tr>
-          <th>Day</th>
-          <th>Supply</th>
-          <th>Demand</th>
-          <th>Price</th>
-          <th>Extra</th>
-        </tr>
-      </tbody>
-    </table>
+    <!-- OTHER IDEAS -->
+    <!-- <canvas id="myChart"></canvas> -->
+    <!-- https://www.youtube.com/watch?v=L3o_IEbfCRY -->
+    <!-- https://www.chartjs.org/docs/latest/getting-started/ -->
+    <!-- https://www.youtube.com/watch?v=4jfcxxTT8H0 -->
+
+    <canvas id="graph" width="1200" height="400"></canvas>
+    <button onclick="psh(); Update();">Add Data</button>
+    <script>
+      // Get the canvas element
+      var canvas = document.getElementById("graph");
+      var ctx = canvas.getContext("2d");
+
+      // Set up the data
+      var data = [];
+
+      // Set up the scale
+      var xScale = canvas.width / (data.length - 1);
+      var yScale = canvas.height / Math.max(...data);
+
+      // Starting point
+      var initialValue = 500;
+
+      // Push the random values to the array
+      function psh() {
+        // OPTIONAL
+        // data.push(Math.round(Math.random() * 1000));
+
+        data.push(initialValue);
+        // add to initial value offset
+        initialValue += Math.round(Math.random() * (50 - -50) + -50);
+        console.log(initialValue);
+      }
+
+      //   Auto generate random data
+      //   for (let index = 0; index <= 3; index++) {
+      //     psh();
+      //   }
+
+      // Draw the line graph
+      function Update() {
+        // Recalculate the xScale and yScale
+        xScale = canvas.width / (data.length - 1);
+        yScale = canvas.height / Math.max(...data);
+
+        //Clears the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        //Draw the line graph
+        ctx.beginPath();
+        ctx.moveTo(0, canvas.height - (data[0] * yScale) / 2); //OPTIONAL yScale / 2
+        for (var i = 1; i < data.length; i++) {
+          ctx.lineTo(i * xScale, canvas.height - (data[i] * yScale) / 2); //OPTIONAL yScale / 2
+        }
+        ctx.stroke();
+        ctx.closePath();
+
+        // console.table(data);
+      }
+      // When data is ready (aka "Auto generate random data" is ON)
+      //   Update();
+
+      // Call the Update() and psh() function every 0.1 second
+      setInterval(Update, 100);
+      setInterval(psh, 100);
+    </script>
   </body>
 </html>
