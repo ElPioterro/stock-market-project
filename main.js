@@ -7,6 +7,7 @@ var max = 10;
 var min = -10;
 var offset;
 var price = 1000;
+var prevPrice = 0;
 var reduction;
 var day = 0;
 
@@ -20,14 +21,19 @@ function oneCycle() {
 
   day++;
 
+  var priceColor = price <= prevPrice ? "red" : "green";
+  var styleChange = "<td style='" + "color: " + priceColor + "'>";
+
   document.getElementById("tab").innerHTML +=
     "<tr><td>" +
     day +
     "</td><td>" +
-    supply +
+    supply.toFixed(2) +
     "</td><td>" +
-    demand +
-    "</td><td>" +
-    price +
-    "</td> </tr>";
+    demand.toFixed(2) +
+    "</td>" +
+    styleChange +
+    price.toFixed(2) +
+    " $</td> </tr>";
+  prevPrice = price;
 }

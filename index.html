@@ -10,21 +10,27 @@
     <style>
       table,
       tr,
-      td {
+      td,
+      th {
         border: 1px solid black;
         border-collapse: collapse;
+      }
+      table {
+        width: 30%;
       }
     </style>
   </head>
   <body>
     <input type="button" onclick="oneCycle()" value="FuckOffDay" />
-    <table id="tab">
-      <tr>
-        <td>Day</td>
-        <td>Supply</td>
-        <td>Demand</td>
-        <td>price</td>
-      </tr>
+    <table>
+      <tbody id="tab">
+        <tr>
+          <th>Day</th>
+          <th>Supply</th>
+          <th>Demand</th>
+          <th>price</th>
+        </tr>
+      </tbody>
     </table>
   </body>
 </html>
