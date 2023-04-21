@@ -22,8 +22,8 @@
       demdat = []; //demand values
 
       // first and last arguments for mathematical functions
-      var x2 = 50;
-      var x1 = -x2;
+      var maxX = 50;
+      var minX = -maxX;
       // a elements for mathematical functions
       var a1 = 1.06;
       var a2 = 0.94;
@@ -31,20 +31,20 @@
       var b1 = 1;
       var b2 = 1;
 
-      for (i = x1; i <= x2; i++) {
+      for (i = minX; i <= maxX; i++) {
         //Adding calculated values of arguments to their respective arrays
         supdat.push(b1 * Math.pow(a1, i));
         demdat.push(b2 * Math.pow(a2, i));
 
-        console.log("supply Y:" + i + " X:" + b1 * Math.pow(a1, i));
-        console.log("demand Y:" + i + " X:" + b2 * Math.pow(a2, i));
+        console.log("supply X:" + i + " Y:" + b1 * Math.pow(a1, i));
+        console.log("demand X:" + i + " Y:" + b2 * Math.pow(a2, i));
       }
 
       // Get the canvas element
       var canvas = document.getElementById("graph");
 
       //variables used for coordinates and display
-      var scaleX = canvas.width / (x2 * 2) - 0.5;
+      var scaleX = canvas.width / (maxX * 2) - 0.5;
       var scaleY = canvas.height / (Math.max(...demdat) * 1.1);
       var positionX = canvas.width / 2; //pos 0 for X
       var positionY = canvas.height - scaleY; // pos 0 for Y
@@ -54,9 +54,12 @@
 
       //Draw function supply
       ctx.beginPath();
-      ctx.moveTo(positionX + x1 * scaleX, positionY - supdat[0] * scaleY);
-      for (var i = x1; i < supdat.length; i++) {
-        ctx.lineTo(positionX + i * scaleX, positionY - supdat[i + x2] * scaleY);
+      ctx.moveTo(positionX + minX * scaleX, positionY - supdat[0] * scaleY);
+      for (var i = minX; i < supdat.length; i++) {
+        ctx.lineTo(
+          positionX + i * scaleX,
+          positionY - supdat[i + maxX] * scaleY
+        );
       }
       ctx.strokeStyle = "blue"; //color blue
       ctx.stroke();
@@ -64,9 +67,12 @@
 
       //Draw function demand
       ctx.beginPath();
-      ctx.moveTo(positionX + x1 * scaleX, positionY - demdat[0] * scaleY);
-      for (var i = x1; i < demdat.length; i++) {
-        ctx.lineTo(positionX + i * scaleX, positionY - demdat[i + x2] * scaleY);
+      ctx.moveTo(positionX + minX * scaleX, positionY - demdat[0] * scaleY);
+      for (var i = minX; i < demdat.length; i++) {
+        ctx.lineTo(
+          positionX + i * scaleX,
+          positionY - demdat[i + maxX] * scaleY
+        );
       }
       ctx.strokeStyle = "red"; //color red
       ctx.stroke();
@@ -78,7 +84,7 @@
         ctx.strokeText(i, positionX, positionY - i * scaleY);
       }
 
-      for (var i = x1; i < x2; i++) {
+      for (var i = minX; i < maxX; i++) {
         ctx.font = "10px Arial";
         ctx.strokeText(i, positionX + i * scaleX, positionY);
       }
