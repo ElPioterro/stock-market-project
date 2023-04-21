@@ -10,11 +10,16 @@
     <!-- https://www.chartjs.org/docs/latest/getting-started/ -->
     <!-- https://www.youtube.com/watch?v=4jfcxxTT8H0 -->
 
-    <canvas id="graph" width="1500" height="1000" style="border:1px solid black"></canvas>
+    <canvas
+      id="graph"
+      width="1500"
+      height="1000"
+      style="border: 1px solid black"
+    ></canvas>
     <button onclick="cycle()">Run Cycle</button>
-    <script>   
-      supdat =[]  //supply values
-      demdat =[]  //demand values
+    <script>
+      supdat = []; //supply values
+      demdat = []; //demand values
 
       // first and last arguments for mathematical functions
       var x2 = 50;
@@ -26,125 +31,72 @@
       var b1 = 1;
       var b2 = 1;
 
+      for (i = x1; i <= x2; i++) {
+        //Adding calculated values of arguments to their respective arrays
+        supdat.push(b1 * Math.pow(a1, i));
+        demdat.push(b2 * Math.pow(a2, i));
 
-      for (i=x1; i<=x2;i++){
-        //Adding calculated values of arguments to their respective arrays 
-        supdat.push(b1*Math.pow(a1,i));   
-        demdat.push(b2*Math.pow(a2,i));
-
-        console.log("supply Y:"+i+" X:"+b1*Math.pow(a1,i));
-        console.log("demand Y:"+i+" X:"+b2*Math.pow(a2,i));   
+        console.log("supply Y:" + i + " X:" + b1 * Math.pow(a1, i));
+        console.log("demand Y:" + i + " X:" + b2 * Math.pow(a2, i));
       }
-
 
       // Get the canvas element
       var canvas = document.getElementById("graph");
 
       //variables used for coordinates and display
-      var scaleX = canvas.width/(x2*2)-0.5;
-      var scaleY = canvas.height/(Math.max(...demdat)*1.1);
-      var positionX = canvas.width /2; //pos 0 for X
-      var positionY = canvas.height -scaleY  ; // pos 0 for Y
+      var scaleX = canvas.width / (x2 * 2) - 0.5;
+      var scaleY = canvas.height / (Math.max(...demdat) * 1.1);
+      var positionX = canvas.width / 2; //pos 0 for X
+      var positionY = canvas.height - scaleY; // pos 0 for Y
 
       //add drawing element
       var ctx = canvas.getContext("2d");
 
-      //Draw function supply  
+      //Draw function supply
       ctx.beginPath();
-      ctx.moveTo(positionX + x1*scaleX, positionY - supdat[0]*scaleY);
+      ctx.moveTo(positionX + x1 * scaleX, positionY - supdat[0] * scaleY);
       for (var i = x1; i < supdat.length; i++) {
-      ctx.lineTo(positionX+i*scaleX,positionY - supdat[i+x2]*scaleY);
-          }
-      ctx .strokeStyle ='blue'; //color red
+        ctx.lineTo(positionX + i * scaleX, positionY - supdat[i + x2] * scaleY);
+      }
+      ctx.strokeStyle = "blue"; //color blue
       ctx.stroke();
       ctx.closePath();
 
       //Draw function demand
       ctx.beginPath();
-      ctx.moveTo(positionX + x1*scaleX, positionY - demdat[0]*scaleY);
+      ctx.moveTo(positionX + x1 * scaleX, positionY - demdat[0] * scaleY);
       for (var i = x1; i < demdat.length; i++) {
-        
-      ctx.lineTo(positionX+i*scaleX,positionY - demdat[i+x2]*scaleY);
-          }
-      ctx.strokeStyle ='red'; //color red
+        ctx.lineTo(positionX + i * scaleX, positionY - demdat[i + x2] * scaleY);
+      }
+      ctx.strokeStyle = "red"; //color red
       ctx.stroke();
       ctx.closePath();
 
       // Draw scale/coordinates
-      for(var i = 0; i<positionY/scaleY; i++){
+      for (var i = 0; i < positionY / scaleY; i++) {
         ctx.font = "10px Arial";
-        ctx.strokeText(i, positionX, positionY-i*scaleY);
+        ctx.strokeText(i, positionX, positionY - i * scaleY);
       }
 
-      for(var i = x1; i<x2; i++){
+      for (var i = x1; i < x2; i++) {
         ctx.font = "10px Arial";
-        ctx.strokeText(i, positionX+i*scaleX, positionY);
+        ctx.strokeText(i, positionX + i * scaleX, positionY);
       }
-
-
-
-      // // Get the canvas element
-      // var canvas = document.getElementById("graph");
-      // var ctx = canvas.getContext("2d");
-
-      // // Set up the data
-      // var data = [];
-
-      // // Set up the scale
-      // var xScale = canvas.width / (data.length - 1);
-      // var yScale = canvas.height / Math.max(...data);
-
-      // // Starting point
-      // var initialValue = 500;
-
-      // // Push the random values to the array
-      // function psh() {
-      //   // OPTIONAL
-      //   // data.push(Math.round(Math.random() * 1000));
-
-      //   data.push(initialValue);
-      //   // add to initial value offset
-      //   initialValue += Math.round(Math.random() * (50 - -50) + -50);
-      //   console.log(initialValue);
-      // }
-
-      // //   Auto generate random data
-      // //   for (let index = 0; index <= 3; index++) {
-      // //     psh();
-      // //   }
-
-      // // Draw the line graph
-      // function Update() {
-      //   // Recalculate the xScale and yScale
-      //   xScale = canvas.width / (data.length - 1);
-      //   yScale = canvas.height / Math.max(...data);
-
-      //   //Clears the canvas
-      //   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      //   //Draw the line graph
-      //   ctx.beginPath();
-      //   ctx.moveTo(0, canvas.height - (data[0] * yScale) / 2); //OPTIONAL yScale / 2
-      //   for (var i = 1; i < data.length; i++) {
-      //     ctx.lineTo(i * xScale, canvas.height - (data[i] * yScale) / 2); //OPTIONAL yScale / 2
-      //   }
-      //   ctx.stroke();
-      //   ctx.closePath();
-
-      //   // console.table(data);
-      // }
-      // // When data is ready (aka "Auto generate random data" is ON)
-      // //   Update();
-      // // Call the Update() and psh() function every 0.1 second
     </script>
-      
-    <script>
-      
-      
 
+    <script>
       //class creation for products
-      class Product{
-        constructor(id, name, basePrice, production, atractivness, demand, supply){ //product properties creation
+      class Product {
+        constructor(
+          id,
+          name,
+          basePrice,
+          production,
+          atractivness,
+          demand,
+          supply
+        ) {
+          //product properties creation
           this.id = id; // id of the product
           this.name = name; // name of the product
 
@@ -156,36 +108,29 @@
 
           this.demand = demand; //current demand of the product
           this.supply = supply; // current supply of the product
-          
         }
-        update(){
-
+        update() {
           // Decides by how much demand and supply will be reduced and if curPrice goes up or down
           var reduction;
-          if(this.supply < this.demand){
+          if (this.supply < this.demand) {
             reduction = this.demand - this.supply;
             //price up in progress
-             
-
-          }else{
+          } else {
             reduction = this.supply - this.demand;
             //price down in progress
-          } 
+          }
 
           //reduces demand and supply
           this.demand -= reduction;
           this.supply -= reduction;
 
-          this.production += Math.pow(0.1,this.priceOffset);
-          this.supply += Math.pow(1.1,this.priceOffset);     
-
+          this.production += Math.pow(0.1, this.priceOffset);
+          this.supply += Math.pow(1.1, this.priceOffset);
         }
       }
 
-
-
-      function cycle(){
-        psh(); 
+      function cycle() {
+        psh();
         Update();
       }
     </script>
