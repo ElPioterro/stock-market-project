@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=1, initial-scale=1.0" />
     <title>Document</title>
-    <script src="main.js"></script>
+    <script src="main.js" defer></script>
 
     <style>
       table,
@@ -20,6 +20,36 @@
       }
       table {
         width: 90%;
+      }
+      thead,
+      tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+      .scroller {
+        border: none;
+        display: block;
+        height: 20em;
+        overflow: scroll;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column-reverse;
+      }
+
+      .scroller .scroller-content .item {
+        height: 20px;
+        transform: translateZ(
+          0
+        ); /* fixes a bug in Safari iOS where the scroller doesn't update */
+      }
+
+      .scrollbar-measure {
+        width: 100px;
+        height: 100px;
+        overflow: scroll;
+        position: absolute;
+        top: -9999px;
       }
     </style>
   </head>
@@ -41,16 +71,16 @@
     <p id="error-log2"></p>
     <br />
     <table>
-      <thead>
-        <tr>
-          <th style="width: 10px">Number of transactions</th>
-          <th>Client ID</th>
-          <th>Type of transaction</th>
-          <th>Price of one action</th>
-          <th>Free shares count</th>
-        </tr>
-      </thead>
-      <tbody id="tab"></tbody>
+      <tr>
+        <th>Number of transactions</th>
+        <th>Client ID</th>
+        <th>Type of transaction</th>
+        <th>Price of one action</th>
+        <th>Free shares count</th>
+      </tr>
+    </table>
+    <table class="scroller">
+      <tbody class="scroller-content" id="tab"></tbody>
     </table>
   </body>
 </html>
