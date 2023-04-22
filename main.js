@@ -27,12 +27,13 @@ function Setup() {
   document.getElementById("buy-btn").disabled = false;
   console.log(actionPrice);
   console.log(actionTotal);
+  setInterval(Update, 2000);
 }
 
 function buyAction() {
   actionQuantity = document.getElementById("actionQuantity").value;
   actionQuantity = parseInt(actionQuantity);
-  if (actionQuantity <= 0) {
+  if (actionQuantity <= 0 || actionQuantity == null) {
     document.getElementById("error-log2").innerHTML = "Invalid input";
     return;
   } else if (actionQuantity > actionAvailable) {
@@ -46,13 +47,13 @@ function buyAction() {
   actionAvailable -= actionQuantity;
   actionCount += actionQuantity;
   actionPrice *= 1 + (actionQuantity * actionQuantity) / actionTotal / 1000;
-  Update("bought");
+  Update("bought", "Player1", trNumber);
 }
 
 function sellAction() {
   actionQuantity = document.getElementById("actionQuantity").value;
   actionQuantity = parseInt(actionQuantity);
-  if (actionQuantity <= 0) {
+  if (actionQuantity <= 0 || actionQuantity == null) {
     document.getElementById("error-log2").innerHTML = "Invalid input";
     return;
   } else if (actionQuantity > actionCount) {
@@ -64,19 +65,13 @@ function sellAction() {
   actionAvailable += actionQuantity;
   actionCount -= actionQuantity;
   actionPrice *= 1 - (actionQuantity * actionQuantity) / actionTotal / 1000;
-  Update("sold");
+  Update("sold", "Player1", trNumber);
 }
 
-// var priceColor = price <= prevPrice ? "red" : "green";
-// var styleChange = "<td style='" + "color: " + priceColor + "'>";
-// var priceExtra =
-//   prevPrice - price >= 0
-//     ? (price - prevPrice).toFixed(2) + "↓"
-//     : (price - prevPrice).toFixed(2) + "↑";
-function Update(type) {
+function Update(type = "-", clientID = "-", trNumber = "-") {
   document.getElementById(
     "tab"
-  ).innerHTML += `<tr><td>${trNumber}</td><td>${type}</td><td>${actionPrice.toFixed(
+  ).innerHTML += `<tr><td>${trNumber}</td><td>${clientID}</td><td>${type}</td><td>${actionPrice.toFixed(
     4
   )}$</td><td>${actionAvailable}</td></tr>`;
   console.log(actionPrice);
