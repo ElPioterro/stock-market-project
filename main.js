@@ -4,6 +4,7 @@ var actionAvailable = 0; // liczba dostępnych akcji
 var actionQuantity = 0; // liczba z jaką ilością akcji
 var actionCount = 0; // liczba posiadanych akcji
 var trNumber = 0; // kolejny numer transakcji
+var speedOfUpdate = 2000;
 
 function Setup() {
   actionTotal = document.getElementById("actionTotal").value;
@@ -27,10 +28,14 @@ function Setup() {
   document.getElementById("buy-btn").disabled = false;
   console.log(actionPrice);
   console.log(actionTotal);
-  setInterval(Update, 2000);
+  // setInterval(Update, speedOfUpdate);
 }
 
 function buyAction() {
+  // Clears error logs
+  document.getElementById("error-log").innerHTML = "";
+  document.getElementById("error-log2").innerHTML = "";
+
   actionQuantity = document.getElementById("actionQuantity").value;
   actionQuantity = parseInt(actionQuantity);
   if (actionQuantity <= 0 || actionQuantity == null) {
@@ -51,8 +56,13 @@ function buyAction() {
 }
 
 function sellAction() {
+  // Clears error logs
+  document.getElementById("error-log").innerHTML = "";
+  document.getElementById("error-log2").innerHTML = "";
+
   actionQuantity = document.getElementById("actionQuantity").value;
   actionQuantity = parseInt(actionQuantity);
+
   if (actionQuantity <= 0 || actionQuantity == null) {
     document.getElementById("error-log2").innerHTML = "Invalid input";
     return;
@@ -69,9 +79,13 @@ function sellAction() {
 }
 
 function Update(type = "-", clientID = "-", trNumber = "-") {
-  document.getElementById(
-    "tab"
-  ).innerHTML += `<tr><td>${trNumber}</td><td>${clientID}</td><td>${type}</td><td>${actionPrice.toFixed(
+  var table = document.getElementById("tab");
+
+  if (table.childElementCount == 21) {
+    table.removeChild(table.firstChild);
+  }
+
+  table.innerHTML += `<tr><td>${trNumber}</td><td>${clientID}</td><td>${type}</td><td>${actionPrice.toFixed(
     4
   )}$</td><td>${actionAvailable}</td></tr>`;
   console.log(actionPrice);
