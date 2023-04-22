@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=1, initial-scale=1.0" />
     <title>Document</title>
-    <script src="main.js" defer></script>
     <script src="bot.js"></script>
+    <script src="main.js" defer></script>
 
     <style>
       table,
@@ -31,7 +31,7 @@
       .scroller {
         border: none;
         display: block;
-        height: 20em;
+        height: 25em;
         overflow: scroll;
         overflow-x: hidden;
         display: flex;
@@ -39,7 +39,7 @@
       }
 
       .scroller .scroller-content .item {
-        height: 20px;
+        /* height: 20px; */
         transform: translateZ(
           0
         ); /* fixes a bug in Safari iOS where the scroller doesn't update */
@@ -70,7 +70,10 @@
     <button onclick="buyAction()" id="buy-btn" disabled>Zakup</button>
     <button onclick="sellAction()" id="sell-btn" disabled>Sprzedarz</button>
     <p id="error-log2"></p>
-    <br />
+    ========== <br />
+    Dodaj Bota:
+    <button onclick="addBot()" id="add-bot-btn" disabled>Spawn</button>
+    <br /><br />
     <table>
       <tr>
         <th>Number of transactions</th>

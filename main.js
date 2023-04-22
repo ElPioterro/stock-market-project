@@ -4,10 +4,9 @@ let actionAvailable = 0; // liczba dostępnych akcji
 let actionQuantity = 0; // liczba z jaką ilością akcji
 let actionCount = 0; // liczba posiadanych akcji
 let trNumber = 0; // kolejny numer transakcji
-let speedOfUpdate = 3000;
-let PlayerName = "Player1";
-let BotInterval = 3000;
-let Bot1 = new Bot("Bot");
+let speedOfUpdate = 3000; //szybkość aktualizacji tabeli
+let PlayerName = "Player1"; // nazwa klienta
+let BotNumber = 1; //numer bota
 
 // Measure the scrollbar width
 function scrollbarMeasure() {
@@ -51,12 +50,12 @@ function Setup() {
 
   document.getElementById("setSection").style.display = "none";
   document.getElementById("buy-btn").disabled = false;
-  console.log(actionPrice);
-  console.log(actionTotal);
+  document.getElementById("add-bot-btn").disabled = false;
+  console.log(`Original action price: ${actionPrice}`);
+  console.log(`Number of all actions: ${actionTotal}`);
 
   // Sets up timers;
-  setInterval(Update, speedOfUpdate);
-  setInterval(Bot1.Update(), BotInterval);
+  // setInterval(Update, speedOfUpdate);
 }
 
 function buyAction() {
@@ -66,7 +65,8 @@ function buyAction() {
 
   actionQuantity = document.getElementById("actionQuantity").value;
   actionQuantity = parseInt(actionQuantity);
-  if (actionQuantity <= 0 || actionQuantity == null) {
+
+  if (actionQuantity <= 0 || actionQuantity === null || isNaN(actionQuantity)) {
     document.getElementById("error-log2").innerHTML = "Invalid input";
     return;
   } else if (actionQuantity > actionAvailable) {
@@ -91,7 +91,7 @@ function sellAction() {
   actionQuantity = document.getElementById("actionQuantity").value;
   actionQuantity = parseInt(actionQuantity);
 
-  if (actionQuantity <= 0 || actionQuantity == null) {
+  if (actionQuantity <= 0 || actionQuantity === null || isNaN(actionQuantity)) {
     document.getElementById("error-log2").innerHTML = "Invalid input";
     return;
   } else if (actionQuantity > actionCount) {
@@ -106,17 +106,33 @@ function sellAction() {
   Update("sold", PlayerName);
 }
 
+function addBot() {
+  let bot = new Bot("BOT-" + BotNumber);
+  let BotInterval = randomNumber(1000, 3000); //szybkość bota
+  // randomly updates bot action
+  // (function loop() {
+  //   let BotInterval = randomNumber(1000, 3000); //szybkość bota
+  //   var rand = Math.round(BotInterval);
+  //   setTimeout(function () {
+  //     bot.createEvent.bind(bot);
+  //     loop();
+  //   }, rand);
+  // })();
+  setInterval(bot.createEvent.bind(bot), BotInterval);
+  BotNumber++;
+}
+
 function Update(type = "-", clientName = "-") {
   let table = document.getElementById("tab");
 
-  if (table.childElementCount == 21) {
-    // table.removeChild(table.firstChild);
-  }
+  // if (table.childElementCount == 21) {
+  //   table.removeChild(table.firstChild);
+  // }
 
   table.innerHTML += `<tr class="item"><td>${trNumber}</td><td>${clientName}</td><td>${type}</td><td>${actionPrice.toFixed(
     4
   )}$</td><td>${actionAvailable}</td></tr>`;
-  console.log(actionPrice);
+  console.log(`actionPrice: ${actionPrice}`);
 }
 
 function randomNumber(min, max) {
