@@ -5,6 +5,7 @@ var actionQuantity = 0; // liczba z jaką ilością akcji
 var actionCount = 0; // liczba posiadanych akcji
 var trNumber = 0; // kolejny numer transakcji
 var speedOfUpdate = 2000;
+var PlayerName = "Player1";
 
 function Setup() {
   actionTotal = document.getElementById("actionTotal").value;
@@ -28,7 +29,7 @@ function Setup() {
   document.getElementById("buy-btn").disabled = false;
   console.log(actionPrice);
   console.log(actionTotal);
-  // setInterval(Update, speedOfUpdate);
+  setInterval(Update, speedOfUpdate);
 }
 
 function buyAction() {
@@ -52,7 +53,7 @@ function buyAction() {
   actionAvailable -= actionQuantity;
   actionCount += actionQuantity;
   actionPrice *= 1 + (actionQuantity * actionQuantity) / actionTotal / 1000;
-  Update("bought", "Player1", trNumber);
+  Update("bought", PlayerName, trNumber);
 }
 
 function sellAction() {
@@ -75,7 +76,7 @@ function sellAction() {
   actionAvailable += actionQuantity;
   actionCount -= actionQuantity;
   actionPrice *= 1 - (actionQuantity * actionQuantity) / actionTotal / 1000;
-  Update("sold", "Player1", trNumber);
+  Update("sold", PlayerName, trNumber);
 }
 
 function Update(type = "-", clientID = "-", trNumber = "-") {
