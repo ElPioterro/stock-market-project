@@ -32,7 +32,7 @@ function Setup() {
 function buyAction() {
   actionQuantity = document.getElementById("actionQuantity").value;
   actionQuantity = parseInt(actionQuantity);
-  if (actionQuantity <= 0) {
+  if (actionQuantity <= 0 || actionQuantity == null) {
     document.getElementById("error-log2").innerHTML = "Invalid input";
     return;
   } else if (actionQuantity > actionAvailable) {
@@ -52,7 +52,7 @@ function buyAction() {
 function sellAction() {
   actionQuantity = document.getElementById("actionQuantity").value;
   actionQuantity = parseInt(actionQuantity);
-  if (actionQuantity <= 0) {
+  if (actionQuantity <= 0 || actionQuantity == null) {
     document.getElementById("error-log2").innerHTML = "Invalid input";
     return;
   } else if (actionQuantity > actionCount) {
@@ -67,12 +67,6 @@ function sellAction() {
   Update("sold");
 }
 
-// var priceColor = price <= prevPrice ? "red" : "green";
-// var styleChange = "<td style='" + "color: " + priceColor + "'>";
-// var priceExtra =
-//   prevPrice - price >= 0
-//     ? (price - prevPrice).toFixed(2) + "↓"
-//     : (price - prevPrice).toFixed(2) + "↑";
 function Update(type) {
   document.getElementById(
     "tab"
