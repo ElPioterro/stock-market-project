@@ -1,22 +1,22 @@
-var actionPrice = 0; // cena jednej akcji
-var actionTotal = 0; // liczba wszystkich akcji
-var actionAvailable = 0; // liczba dostępnych akcji
-var actionQuantity = 0; // liczba z jaką ilością akcji
-var actionCount = 0; // liczba posiadanych akcji
-var trNumber = 0; // kolejny numer transakcji
-var speedOfUpdate = 3000;
-var PlayerName = "Player1";
-var BotInterval = 3000;
-var Bot1 = new Bot("Bot");
+let actionPrice = 0; // cena jednej akcji
+let actionTotal = 0; // liczba wszystkich akcji
+let actionAvailable = 0; // liczba dostępnych akcji
+let actionQuantity = 0; // liczba z jaką ilością akcji
+let actionCount = 0; // liczba posiadanych akcji
+let trNumber = 0; // kolejny numer transakcji
+let speedOfUpdate = 3000;
+let PlayerName = "Player1";
+let BotInterval = 3000;
+let Bot1 = new Bot("Bot");
 
 // Measure the scrollbar width
 function scrollbarMeasure() {
-  var scrollDiv = document.createElement("div");
+  let scrollDiv = document.createElement("div");
   scrollDiv.className = "scrollbar-measure";
   document.body.appendChild(scrollDiv);
 
   // Get the scrollbar width
-  var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+  let scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
   // console.warn(scrollbarWidth);
 
   // Delete the div
@@ -107,7 +107,7 @@ function sellAction() {
 }
 
 function Update(type = "-", clientName = "-") {
-  var table = document.getElementById("tab");
+  let table = document.getElementById("tab");
 
   if (table.childElementCount == 21) {
     // table.removeChild(table.firstChild);
