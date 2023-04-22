@@ -15,21 +15,38 @@
         border: 1px solid black;
         border-collapse: collapse;
       }
+      td {
+        text-align: center;
+      }
       table {
-        width: 30%;
+        width: 90%;
       }
     </style>
   </head>
   <body>
-    <input type="button" onclick="oneCycle()" value="FuckOffDay" />
+    <div id="setSection">
+      Ilość wszystkich akcji:
+      <input type="number" style="width: 50px" id="actionTotal" />
+      <br />
+      Cena akcji:
+      <input type="number" style="width: 50px" id="actionPrice" /><br />
+      <button onclick="Setup();">Set Values</button><br /><br />
+    </div>
+    <p id="error-log"></p>
+    ========== <br />
+    Ilość akcji:
+    <input type="number" style="width: 50px" id="actionQuantity" /><br />
+    <button onclick="buyAction()" id="buy-btn" disabled>Zakup</button>
+    <button onclick="sellAction()" id="sell-btn" disabled>Sprzedarz</button>
+    <p id="error-log2"></p>
+    <br /><br />
     <table>
       <tbody id="tab">
         <tr>
-          <th>Day</th>
-          <th>Supply</th>
-          <th>Demand</th>
-          <th>Price</th>
-          <th>Extra</th>
+          <th style="width: 10px">Number of transactions</th>
+          <th>Type of transaction</th>
+          <th>Price of one action</th>
+          <th>Free shares count</th>
         </tr>
       </tbody>
     </table>

@@ -1,46 +1,83 @@
-// todos
-//  klasa "towar"
+var actionPrice = 0; // cena jednej akcji
+var actionTotal = 0; // liczba wszystkich akcji
+var actionAvailable = 0; // liczba dostępnych akcji
+var actionQuantity = 0; // liczba z jaką ilością akcji
+var actionCount = 0; // liczba posiadanych akcji
+var trNumber = 0; // kolejny numer transakcji
 
-var demand = 200;
-var supply = 100;
-var max = 10;
-var min = -10;
-var offset;
-var price = 1000;
-var prevPrice = 1000;
-var reduction;
-var day = 0;
+function Setup() {
+  actionTotal = document.getElementById("actionTotal").value;
+  actionPrice = document.getElementById("actionPrice").value;
+  actionTotal = parseInt(actionTotal);
+  actionPrice = parseInt(actionPrice);
+  actionAvailable = actionTotal;
+  if (
+    isNaN(actionPrice) ||
+    isNaN(actionTotal) ||
+    actionPrice == null ||
+    actionTotal == null ||
+    actionPrice <= 0 ||
+    actionTotal <= 0
+  ) {
+    document.getElementById("error-log").innerHTML = "Invalid input";
+    return;
+  }
 
-function oneCycle() {
-  offset = Math.random() * (max - min) + min;
-  demand += offset;
-  offset = Math.random() * (max - min) + min;
-  supply += offset;
+  document.getElementById("setSection").style.display = "none";
+  document.getElementById("buy-btn").disabled = false;
+  console.log(actionPrice);
+  console.log(actionTotal);
+}
 
-  supply >= demand ? (price -= offset) : (price += offset);
+function buyAction() {
+  actionQuantity = document.getElementById("actionQuantity").value;
+  actionQuantity = parseInt(actionQuantity);
+  if (actionQuantity <= 0) {
+    document.getElementById("error-log2").innerHTML = "Invalid input";
+    return;
+  } else if (actionQuantity > actionAvailable) {
+    document.getElementById("error-log2").innerHTML =
+      "Not enough actions to buy";
+    return;
+  }
+  document.getElementById("sell-btn").disabled = false;
 
-  day++;
+  trNumber++;
+  actionAvailable -= actionQuantity;
+  actionCount += actionQuantity;
+  actionPrice *= 1 + (actionQuantity * actionQuantity) / actionTotal / 1000;
+  Update("bought");
+}
 
-  var priceColor = price <= prevPrice ? "red" : "green";
-  var styleChange = "<td style='" + "color: " + priceColor + "'>";
-  var priceExtra =
-    prevPrice - price >= 0
-      ? (price - prevPrice).toFixed(2) + "↓"
-      : (price - prevPrice).toFixed(2) + "↑";
+function sellAction() {
+  actionQuantity = document.getElementById("actionQuantity").value;
+  actionQuantity = parseInt(actionQuantity);
+  if (actionQuantity <= 0) {
+    document.getElementById("error-log2").innerHTML = "Invalid input";
+    return;
+  } else if (actionQuantity > actionCount) {
+    document.getElementById("error-log2").innerHTML =
+      "Not enough actions to sell";
+    return;
+  }
+  trNumber++;
+  actionAvailable += actionQuantity;
+  actionCount -= actionQuantity;
+  actionPrice *= 1 - (actionQuantity * actionQuantity) / actionTotal / 1000;
+  Update("sold");
+}
 
-  document.getElementById("tab").innerHTML +=
-    "<tr><td>" +
-    day +
-    "</td><td>" +
-    supply.toFixed(2) +
-    "</td><td>" +
-    demand.toFixed(2) +
-    "</td>" +
-    styleChange +
-    price.toFixed(2) +
-    " $</td>" +
-    styleChange +
-    priceExtra +
-    " </td></tr>";
-  prevPrice = price;
+// var priceColor = price <= prevPrice ? "red" : "green";
+// var styleChange = "<td style='" + "color: " + priceColor + "'>";
+// var priceExtra =
+//   prevPrice - price >= 0
+//     ? (price - prevPrice).toFixed(2) + "↓"
+//     : (price - prevPrice).toFixed(2) + "↑";
+function Update(type) {
+  document.getElementById(
+    "tab"
+  ).innerHTML += `<tr><td>${trNumber}</td><td>${type}</td><td>${actionPrice.toFixed(
+    4
+  )}$</td><td>${actionAvailable}</td></tr>`;
+  console.log(actionPrice);
 }
