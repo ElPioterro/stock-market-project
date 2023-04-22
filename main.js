@@ -6,6 +6,8 @@ var actionCount = 0; // liczba posiadanych akcji
 var trNumber = 0; // kolejny numer transakcji
 var speedOfUpdate = 3000;
 var PlayerName = "Player1";
+var BotInterval = 3000;
+var Bot1 = new Bot("Bot");
 
 // Measure the scrollbar width
 function scrollbarMeasure() {
@@ -20,6 +22,13 @@ function scrollbarMeasure() {
   // Delete the div
   document.body.removeChild(scrollDiv);
   return scrollbarWidth;
+}
+
+// Changes table width
+function changeTableWidth() {
+  document.getElementsByTagName(
+    "table"
+  )[0].style.width = `calc(${90}% - ${scrollbarMeasure()}px)`;
 }
 
 function Setup() {
@@ -44,7 +53,10 @@ function Setup() {
   document.getElementById("buy-btn").disabled = false;
   console.log(actionPrice);
   console.log(actionTotal);
+
+  // Sets up timers;
   setInterval(Update, speedOfUpdate);
+  setInterval(Bot1.Update(), BotInterval);
 }
 
 function buyAction() {
@@ -94,24 +106,21 @@ function sellAction() {
   Update("sold", PlayerName);
 }
 
-function Update(type = "-", clientID = "-") {
+function Update(type = "-", clientName = "-") {
   var table = document.getElementById("tab");
 
   if (table.childElementCount == 21) {
     // table.removeChild(table.firstChild);
   }
 
-  table.innerHTML += `<tr class="item"><td>${trNumber}</td><td>${clientID}</td><td>${type}</td><td>${actionPrice.toFixed(
+  table.innerHTML += `<tr class="item"><td>${trNumber}</td><td>${clientName}</td><td>${type}</td><td>${actionPrice.toFixed(
     4
   )}$</td><td>${actionAvailable}</td></tr>`;
   console.log(actionPrice);
 }
 
-// Changes table width
-function changeTableWidth() {
-  document.getElementsByTagName(
-    "table"
-  )[0].style.width = `calc(${90}% - ${scrollbarMeasure()}px)`;
+function randomNumber(min, max) {
+  return Math.random() * (max - min) + min;
 }
 
 changeTableWidth();
