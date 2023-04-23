@@ -23,6 +23,7 @@
 - [ ] Clean code for buyActions and sellActions in Bot Class
 - [ ] If bot can't buy it needs to sell
 - [ ] OPTIONAL: Add some cool font
+- [ ] OPTIONAL: fix displaying bug ![image](screenshot1.png)
 
 ## Project Status
 
