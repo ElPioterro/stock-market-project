@@ -6,7 +6,8 @@ let actionCount = 0; // liczba posiadanych akcji
 let trNumber = 0; // kolejny numer transakcji
 let speedOfUpdate = 3000; //szybkość aktualizacji tabeli
 let PlayerName = "Player1"; // nazwa klienta
-let BotNumber = 1; //numer bota
+let BotNumber = 0; //numer bota
+let BotsTimers = []; //numer bota
 
 // Measure the scrollbar width
 function scrollbarMeasure() {
@@ -108,7 +109,7 @@ function sellAction() {
 
 function addBot() {
   let bot = new Bot("BOT-" + BotNumber);
-  let BotInterval = randomNumber(1000, 3000); //szybkość bota
+  let BotInterval = 2000; //szybkość bota
   // randomly updates bot action
   // (function loop() {
   //   let BotInterval = randomNumber(1000, 3000); //szybkość bota
@@ -118,12 +119,24 @@ function addBot() {
   //     loop();
   //   }, rand);
   // })();
-  setInterval(bot.createEvent.bind(bot), BotInterval);
+  BotsTimers.push(setInterval(bot.createEvent.bind(bot), BotInterval));
   BotNumber++;
 }
 
 function Update(type = "-", clientName = "-") {
   let table = document.getElementById("tab");
+  if (actionPrice <= 0) {
+    Array.from(document.getElementsByTagName("button")).forEach((element) => {
+      element.disabled = true;
+    });
+    Array.from(BotsTimers).forEach((element) => {
+      clearInterval(element);
+      console.log(`Bot ${BotsTimers.indexOf(element)} stopped`);
+    });
+    console.log(`%cBankruptcy`, `font-size: 2em; color: red;`);
+    table.innerHTML += `<tr class="item bankruptcy"><td>Bankruptcy</td><td>Bankruptcy</td><td>Bankruptcy</td><td>Bankruptcy</td><td>Bankruptcy</td></tr>`;
+    return;
+  }
 
   // if (table.childElementCount == 21) {
   //   table.removeChild(table.firstChild);

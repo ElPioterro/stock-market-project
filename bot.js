@@ -3,25 +3,33 @@ class Bot {
     this.name = name;
     this.actionCount = 0;
   }
+
   buyAction(actionQuantity) {
     if (actionQuantity > actionAvailable) {
-      console.warn(`${this.name}: Not enough actions to buy`);
-      return;
+      console.warn(
+        `${this.name}: Not enough actions to buy. Trying to buy ${actionQuantity}`
+      );
+      return false;
     }
     trNumber++;
     actionAvailable -= actionQuantity;
     this.actionCount += actionQuantity;
     actionPrice *= 1 + (actionQuantity * actionQuantity) / actionTotal / 1000;
+    return true;
   }
+
   sellAction(actionQuantity) {
-    if (actionQuantity > actionCount) {
-      console.warn(`${this.name}: Not enough actions to buy`);
-      return;
+    if (actionQuantity > this.actionCount) {
+      console.warn(
+        `${this.name}: Not enough actions to sell. Trying to sell ${actionQuantity}`
+      );
+      return false;
     }
     trNumber++;
     actionAvailable += actionQuantity;
     this.actionCount -= actionQuantity;
     actionPrice *= 1 - (actionQuantity * actionQuantity) / actionTotal / 1000;
+    return true;
   }
 
   createEvent() {
@@ -31,20 +39,32 @@ class Bot {
         break;
       }
       case 2: {
-        console.log(this.name + " is buying");
-        // randomNumber(1, actionAvailable)
+        if (actionAvailable === 0) {
+          break;
+        }
+        if (
+          !this.buyAction(Math.floor(randomNumber(0, actionAvailable / 2)) + 1)
+        ) {
+          break;
+        }
 
-        //if warned - should break;
-        this.buyAction(50);
+        console.log(this.name + " is buying");
         Update("bought", this.name);
         break;
       }
       case 3: {
-        console.log(this.name + " is selling");
-        // randomNumber(1, this.actionCount)
+        if (this.actionCount === 0) {
+          break;
+        }
+        if (
+          !this.sellAction(
+            Math.floor(randomNumber(0, this.actionCount / 2)) + 1
+          )
+        ) {
+          break;
+        }
 
-        //if warned - should break;
-        this.sellAction(50);
+        console.log(this.name + " is selling");
         Update("sold", this.name);
         break;
       }
