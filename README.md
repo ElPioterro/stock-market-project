@@ -16,14 +16,13 @@
 ## Todos:
 
 - [x] Check if bot is trying to buy/sell to much of actions then it has
-- [ ] Sell all actions - checkbox
+- [-] Sell all actions - checkbox
 - [?] Store Bots data in array
 - [x] If Price of action reaches 0 or lower, loop stops
-- [ ] Get random refreshrate of bots' actions
-- [ ] Clean code for buyActions and sellActions in Bot Class
-- [ ] If bot can't buy it needs to sell
-- [ ] OPTIONAL: Add some cool font
-- [ ] OPTIONAL: fix displaying bug ![image](screenshot1.png)
+- [x] Get random refreshrate of bots' actions
+- [-] Clean code for buyActions and sellActions in Bot Class
+- [-] OPTIONAL: Add some cool font
+- [-] OPTIONAL: fix displaying bug ![image](screenshot1.png)
 
 ## Project Status
 

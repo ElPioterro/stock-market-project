@@ -4,7 +4,6 @@ let actionAvailable = 0; // liczba dostępnych akcji
 let actionQuantity = 0; // liczba z jaką ilością akcji
 let actionCount = 0; // liczba posiadanych akcji
 let trNumber = 0; // kolejny numer transakcji
-let speedOfUpdate = 3000; //szybkość aktualizacji tabeli
 let PlayerName = "Player1"; // nazwa klienta
 let BotNumber = 0; //numer bota
 let BotsTimers = []; //numer bota
@@ -54,9 +53,6 @@ function Setup() {
   document.getElementById("add-bot-btn").disabled = false;
   console.log(`Original action price: ${actionPrice}`);
   console.log(`Number of all actions: ${actionTotal}`);
-
-  // Sets up timers;
-  // setInterval(Update, speedOfUpdate);
 }
 
 function buyAction() {
@@ -109,17 +105,18 @@ function sellAction() {
 
 function addBot() {
   let bot = new Bot("BOT-" + BotNumber);
-  let BotInterval = 2000; //szybkość bota
   // randomly updates bot action
-  // (function loop() {
-  //   let BotInterval = randomNumber(1000, 3000); //szybkość bota
-  //   var rand = Math.round(BotInterval);
-  //   setTimeout(function () {
-  //     bot.createEvent.bind(bot);
-  //     loop();
-  //   }, rand);
-  // })();
-  BotsTimers.push(setInterval(bot.createEvent.bind(bot), BotInterval));
+  function loop() {
+    let BotInterval = randomNumber(1000, 3000); //szybkość bota
+    let rand = Math.round(BotInterval);
+    setTimeout(function () {
+      bot.createEvent();
+      loop();
+    }, rand);
+  }
+  loop();
+  console.log(`%cBot ${BotNumber} started`, "color: aqua;");
+  // BotsTimers.push(setInterval(bot.createEvent.bind(bot), BotInterval));
   BotNumber++;
 }
 
