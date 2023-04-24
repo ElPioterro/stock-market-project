@@ -19,6 +19,8 @@
 - [-] Sell all actions - checkbox
 - [?] Store Bots data in array
 - [x] If Price of action reaches 0 or lower, loop stops
+- [-] If bot can't buy it needs to sell
+- [-] Change from Bankrupt message to Delisted or Private - it doesn't have to bankrupt
 - [x] Get random refreshrate of bots' actions
 - [-] Clean code for buyActions and sellActions in Bot Class
 - [-] OPTIONAL: Add some cool font
