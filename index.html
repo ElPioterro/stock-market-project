@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Stock Market Graph</title>
+    <script src="main.js" defer></script>
   </head>
   <body>
     <!-- OTHER IDEAS -->
@@ -10,65 +11,22 @@
     <!-- https://www.chartjs.org/docs/latest/getting-started/ -->
     <!-- https://www.youtube.com/watch?v=4jfcxxTT8H0 -->
 
-    <canvas id="graph" width="1200" height="400"></canvas>
-    <button onclick="psh(); Update();">Add Data</button>
-    <script>
-      // Get the canvas element
-      var canvas = document.getElementById("graph");
-      var ctx = canvas.getContext("2d");
+    <canvas id="graph" width="900" height="400"></canvas>
 
-      // Set up the data
-      var data = [];
-
-      // Set up the scale
-      var xScale = canvas.width / (data.length - 1);
-      var yScale = canvas.height / Math.max(...data);
-
-      // Starting point
-      var initialValue = 500;
-
-      // Push the random values to the array
-      function psh() {
-        // OPTIONAL
-        // data.push(Math.round(Math.random() * 1000));
-
-        data.push(initialValue);
-        // add to initial value offset
-        initialValue += Math.round(Math.random() * (50 - -50) + -50);
-        console.log(initialValue);
-      }
-
-      //   Auto generate random data
-      //   for (let index = 0; index <= 3; index++) {
-      //     psh();
-      //   }
-
-      // Draw the line graph
-      function Update() {
-        // Recalculate the xScale and yScale
-        xScale = canvas.width / (data.length - 1);
-        yScale = canvas.height / Math.max(...data);
-
-        //Clears the canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        //Draw the line graph
-        ctx.beginPath();
-        ctx.moveTo(0, canvas.height - (data[0] * yScale) / 2); //OPTIONAL yScale / 2
-        for (var i = 1; i < data.length; i++) {
-          ctx.lineTo(i * xScale, canvas.height - (data[i] * yScale) / 2); //OPTIONAL yScale / 2
-        }
-        ctx.stroke();
-        ctx.closePath();
-
-        // console.table(data);
-      }
-      // When data is ready (aka "Auto generate random data" is ON)
-      //   Update();
-
-      // Call the Update() and psh() function every 0.1 second
-      setInterval(Update, 100);
-      setInterval(psh, 100);
-    </script>
+    <div id="setSection">
+      Ilość wszystkich akcji:
+      <input type="number" style="width: 50px" id="actionTotal" />
+      <br />
+      Cena akcji:
+      <input type="number" style="width: 50px" id="actionPrice" /><br />
+      <button onclick="Setup();">Set Values</button><br />
+    </div>
+    <p id="error-log"></p>
+    ========== <br />
+    Ilość akcji:
+    <input type="number" style="width: 50px" id="actionQuantity" /><br />
+    <button onclick="buyAction()" id="buy-btn" disabled>Zakup</button>
+    <button onclick="sellAction()" id="sell-btn" disabled>Sprzedarz</button>
+    <p id="error-log2"></p>
   </body>
 </html>
