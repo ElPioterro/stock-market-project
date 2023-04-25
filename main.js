@@ -6,7 +6,9 @@ let actionCount = 0; // liczba posiadanych akcji
 let trNumber = 0; // kolejny numer transakcji
 let PlayerName = "Player1"; // nazwa klienta
 let BotNumber = 0; //numer bota
-let BotsTimers = []; //numer bota
+let BotsTimers = []; //Lista timerow botow
+let BotInterval = 2000; //Czas wykonania akcji bota - zmienia się
+// let Bots = []; //Lista botow
 
 // Measure the scrollbar width
 function scrollbarMeasure() {
@@ -106,17 +108,17 @@ function sellAction() {
 function addBot() {
   let bot = new Bot("BOT-" + BotNumber);
   // randomly updates bot action
-  function loop() {
-    let BotInterval = randomNumber(1000, 3000); //szybkość bota
-    let rand = Math.round(BotInterval);
-    setTimeout(function () {
-      bot.createEvent();
-      loop();
-    }, rand);
-  }
-  loop();
+  // function loop() {
+  //   let BotInterval = randomNumber(1000, 3000); //szybkość bota
+  //   let rand = Math.round(BotInterval);
+  //   setTimeout(function () {
+  //     bot.createEvent();
+  //     loop();
+  //   }, rand);
+  // }
+  // loop();
   console.log(`%cBot ${BotNumber} started`, "color: aqua;");
-  // BotsTimers.push(setInterval(bot.createEvent.bind(bot), BotInterval));
+  BotsTimers.push(setInterval(bot.createEvent.bind(bot), BotInterval));
   BotNumber++;
 }
 
@@ -128,7 +130,10 @@ function Update(type = "-", clientName = "-") {
     });
     Array.from(BotsTimers).forEach((element) => {
       clearInterval(element);
-      console.log(`Bot ${BotsTimers.indexOf(element)} stopped`);
+      console.log(
+        `%cBot ${BotsTimers.indexOf(element)} stopped`,
+        `color: orange;`
+      );
     });
     console.log(`%cBankruptcy`, `font-size: 2em; color: red;`);
     table.innerHTML += `<tr class="item bankruptcy"><td>Bankruptcy</td><td>Bankruptcy</td><td>Bankruptcy</td><td>Bankruptcy</td><td>Bankruptcy</td></tr>`;

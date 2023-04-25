@@ -33,6 +33,7 @@ class Bot {
   }
 
   createEvent() {
+    BotInterval = Math.round(randomNumber(1000, 3000));
     switch (Math.floor(Math.random() * 3) + 1) {
       case 1: {
         console.log(this.name + " is passing");
