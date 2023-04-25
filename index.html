@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=1, initial-scale=1.0" />
     <title>Document</title>
-    <script src="main.js"></script>
+    <script src="bot.js"></script>
+    <script src="main.js" defer></script>
 
     <style>
       table,
@@ -15,23 +16,80 @@
         border: 1px solid black;
         border-collapse: collapse;
       }
+      td {
+        text-align: center;
+      }
       table {
-        width: 30%;
+        width: 90%;
+      }
+      thead,
+      tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+      .scroller {
+        border: none;
+        display: block;
+        height: 25em;
+        overflow: scroll;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column-reverse;
+      }
+
+      .scroller .scroller-content .item {
+        /* height: 20px; */
+        transform: translateZ(
+          0
+        ); /* fixes a bug in Safari iOS where the scroller doesn't update */
+      }
+
+      .scrollbar-measure {
+        width: 100px;
+        height: 100px;
+        overflow: scroll;
+        position: absolute;
+        top: -9999px;
+      }
+
+      .bankruptcy {
+        font-size: clamp(1em, 1.5em, 2em);
+        color: red;
       }
     </style>
   </head>
   <body>
-    <input type="button" onclick="oneCycle()" value="FuckOffDay" />
+    <div id="setSection">
+      Ilość wszystkich akcji:
+      <input type="number" style="width: 50px" id="actionTotal" />
+      <br />
+      Cena akcji:
+      <input type="number" style="width: 50px" id="actionPrice" /><br />
+      <button onclick="Setup();">Set Values</button><br />
+    </div>
+    <p id="error-log"></p>
+    ========== <br />
+    Ilość akcji:
+    <input type="number" style="width: 50px" id="actionQuantity" /><br />
+    <button onclick="buyAction()" id="buy-btn" disabled>Zakup</button>
+    <button onclick="sellAction()" id="sell-btn" disabled>Sprzedarz</button>
+    <p id="error-log2"></p>
+    ========== <br />
+    Dodaj Bota:
+    <button onclick="addBot()" id="add-bot-btn" disabled>Spawn</button>
+    <br /><br />
     <table>
-      <tbody id="tab">
-        <tr>
-          <th>Day</th>
-          <th>Supply</th>
-          <th>Demand</th>
-          <th>Price</th>
-          <th>Extra</th>
-        </tr>
-      </tbody>
+      <tr>
+        <th>Number of transactions</th>
+        <th>Client ID</th>
+        <th>Type of transaction</th>
+        <th>Price of one action</th>
+        <th>Free shares count</th>
+      </tr>
+    </table>
+    <table class="scroller">
+      <tbody class="scroller-content" id="tab"></tbody>
     </table>
   </body>
 </html>
