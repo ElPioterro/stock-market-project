@@ -18,6 +18,7 @@
 I GOT A ON THIS PROJECT!
 
 > Yatta yo!
+
 > ![Grade image](grade_img.png)
 
 ## Todos:
