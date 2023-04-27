@@ -11,11 +11,12 @@
 ## General Information
 
 - This project is represention of real-life stock-market prices for various items.
-- Purpose of this project is to get A as final grade for web-development class.
+- Purpose of this project:
+- [x] Get A as final grade for web-development class.
 
-### Update #1
+#### Update #1
 
-I GOT A ON THIS PROJECT!
+I GOT "A" GRADE ON THIS PROJECT!
 
 > Yatta yo!
 
@@ -45,7 +46,7 @@ Project is: _complete_
 
 ## Acknowledgements
 
-- Idea from: Prof. Karol M.
+- Idea from: Prof. Karol M. ❤️
 
 ## Contact
 
