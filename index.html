@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=1, initial-scale=1.0" />
     <title>Document</title>
+    <script src="exportTable.js"></script>
     <script src="bot.js"></script>
     <script src="main.js" defer></script>
 
@@ -79,7 +80,7 @@
     Dodaj Bota:
     <button onclick="addBot()" id="add-bot-btn" disabled>Spawn</button>
     <br /><br />
-    <table>
+    <table id="table1">
       <tr>
         <th>Number of transactions</th>
         <th>Client ID</th>
@@ -91,5 +92,6 @@
     <table class="scroller">
       <tbody class="scroller-content" id="tab"></tbody>
     </table>
+    <button onclick="exportTableToExcel()">Export Table to Excel</button>
   </body>
 </html>
