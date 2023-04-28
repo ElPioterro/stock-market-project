@@ -57,7 +57,7 @@ function exportTableToExcel() {
   // create an anchor element to trigger the download
   var link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = "merged-table.csv";
+  link.download = "tabledata.csv";
 
   // trigger the download
   document.body.appendChild(link);
