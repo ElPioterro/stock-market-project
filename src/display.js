@@ -6,6 +6,10 @@ function displayLineChart() {
   }
 
   let file = document.querySelector("input[type=file]").files[0];
+  if (!file) {
+    alert("Please select a file!");
+    return;
+  }
   let reader = new FileReader();
   reader.onload = function (event) {
     let data = new Uint8Array(event.target.result);
