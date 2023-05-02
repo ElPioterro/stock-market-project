@@ -128,6 +128,7 @@ function Update(type = "-", clientName = "-") {
     Array.from(document.getElementsByTagName("button")).forEach((element) => {
       element.disabled = true;
     });
+    document.getElementById("export-btn").disabled = false;
     Array.from(BotsTimers).forEach((element) => {
       clearInterval(element);
       console.log(
