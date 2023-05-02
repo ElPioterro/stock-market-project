@@ -1,0 +1,57 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+td {
+  text-align: center;
+}
+table,
+tr,
+td,
+th {
+  border: 1px solid black !important;
+  border-collapse: collapse;
+}
+table {
+  width: 100%;
+}
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+.scroller {
+  border: none;
+  display: block;
+  height: 30em;
+  overflow: scroll;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.scroller .scroller-content .item {
+  /* height: 20px; */
+  transform: translateZ(
+    0
+  ); /* fixes a bug in Safari iOS where the scroller doesn't update */
+}
+
+.scrollbar-measure {
+  width: 100px;
+  height: 100px;
+  overflow: scroll;
+  position: absolute;
+  top: -9999px;
+}
+
+.bankruptcy {
+  font-size: clamp(1em, 1.5em, 2em);
+  color: red;
+}
+input[type="number"] {
+  width: 5em;
+}
