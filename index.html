@@ -3,99 +3,110 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=1, initial-scale=1.0" />
-    <title>Document</title>
-    <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
-    <script src="exportTable.js"></script>
-    <script src="bot.js"></script>
-
-    <script src="main.js" defer></script>
-
-    <style>
-      table,
-      tr,
-      td,
-      th {
-        border: 1px solid black;
-        border-collapse: collapse;
-      }
-      td {
-        text-align: center;
-      }
-      table {
-        width: 90%;
-      }
-      thead,
-      tbody tr {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
-      }
-      .scroller {
-        border: none;
-        display: block;
-        height: 25em;
-        overflow: scroll;
-        overflow-x: hidden;
-        display: flex;
-        flex-direction: column-reverse;
-      }
-
-      .scroller .scroller-content .item {
-        /* height: 20px; */
-        transform: translateZ(
-          0
-        ); /* fixes a bug in Safari iOS where the scroller doesn't update */
-      }
-
-      .scrollbar-measure {
-        width: 100px;
-        height: 100px;
-        overflow: scroll;
-        position: absolute;
-        top: -9999px;
-      }
-
-      .bankruptcy {
-        font-size: clamp(1em, 1.5em, 2em);
-        color: red;
-      }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Market Simulator</title>
+    <link rel="stylesheet" href="font.css" />
+    <link rel="stylesheet" href="main.css" />
   </head>
   <body>
-    <div id="setSection">
-      Ilość wszystkich akcji:
-      <input type="number" style="width: 50px" id="actionTotal" />
-      <br />
-      Cena akcji:
-      <input type="number" style="width: 50px" id="actionPrice" /><br />
-      <button onclick="Setup();">Set Values</button><br />
+    <div class="container">
+      <h1 class="mt-5">Stock Market Simulator</h1>
+      <div class="row mt-4">
+        <div class="col" id="setSection">
+          <div class="form-group">
+            <label for="actionTotal">Total number of actions:</label>
+            <input type="number" id="actionTotal" placeholder="1000" />
+          </div>
+          <div class="form-group">
+            <label for="actionPrice">Price of one action:</label>
+            <input type="number" id="actionPrice" placeholder="1000" /><label
+              for="actionPrice"
+              >$</label
+            >
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary" onclick="Setup();">
+              Set Values
+            </button>
+          </div>
+          <p class="bg-danger mt-3" id="error-log"></p>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="actionQuantity">Number of actions:</label>
+            <input type="number" id="actionQuantity" /><br />
+          </div>
+          <div class="form-group">
+            <button
+              class="btn btn-primary"
+              onclick="buyAction()"
+              id="buy-btn"
+              disabled
+            >
+              Zakup
+            </button>
+            <button
+              class="btn btn-primary"
+              onclick="sellAction()"
+              id="sell-btn"
+              disabled
+            >
+              Sprzedaż
+            </button>
+          </div>
+          <p class="bg-danger mt-3" id="error-log2"></p>
+        </div>
+        <div class="col form-group">
+          <label for="add-bot-btn">Add Bot</label>
+          <button
+            class="btn btn-primary"
+            onclick="addBot()"
+            id="add-bot-btn"
+            disabled
+          >
+            Spawn
+          </button>
+        </div>
+        <div class="col form-group">
+          <button
+            class="btn btn-success"
+            onclick="exportTableToExcel()"
+            id="export-btn"
+          >
+            Export Table to Excel
+          </button>
+        </div>
+      </div>
+
+      <table class="table-group table-bordered mt-3 text-center" id="table1">
+        <tr>
+          <th>Number of transactions</th>
+          <th>Client ID</th>
+          <th>Type of transaction</th>
+          <th>Price of one action</th>
+          <th>Free shares count</th>
+        </tr>
+      </table>
+      <table class="table-group table-hover table-bordered scroller">
+        <tbody class="scroller-content" id="tab"></tbody>
+      </table>
     </div>
-    <p id="error-log"></p>
-    ========== <br />
-    Ilość akcji:
-    <input type="number" style="width: 50px" id="actionQuantity" /><br />
-    <button onclick="buyAction()" id="buy-btn" disabled>Zakup</button>
-    <button onclick="sellAction()" id="sell-btn" disabled>Sprzedarz</button>
-    <p id="error-log2"></p>
-    ========== <br />
-    Dodaj Bota:
-    <button onclick="addBot()" id="add-bot-btn" disabled>Spawn</button>
-    <br /><br />
-    <table id="table1">
-      <tr>
-        <th>Number of transactions</th>
-        <th>Client ID</th>
-        <th>Type of transaction</th>
-        <th>Price of one action</th>
-        <th>Free shares count</th>
-      </tr>
-    </table>
-    <table class="scroller">
-      <tbody class="scroller-content" id="tab"></tbody>
-    </table>
-    <button onclick="exportTableToExcel()" id="export-btn">
-      Export Table to Excel
-    </button>
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
+
+    <!-- Custom Script -->
+    <script src="src/exportTable.js"></script>
+    <script src="src/bot.js"></script>
+    <script src="src/main.js"></script>
   </body>
 </html>

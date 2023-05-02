@@ -29,7 +29,7 @@ function scrollbarMeasure() {
 function changeTableWidth() {
   document.getElementsByTagName(
     "table"
-  )[0].style.width = `calc(${90}% - ${scrollbarMeasure()}px)`;
+  )[0].style.width = `calc(${100}% - ${scrollbarMeasure()}px)`;
 }
 
 function Setup() {
